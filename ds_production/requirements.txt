@@ -1,0 +1,16 @@
+APScheduler==3.3.1
+certifi==2017.7.27.1
+chardet==3.0.4
+funcsigs==1.0.2
+futures==3.1.1
+idna==2.6
+ntplib==0.3.1
+pygobject==3.20.0
+pytz==2017.2
+requests==2.18.4
+scapy==2.2.0
+six==1.11.0
+tzlocal==1.4
+urllib3==1.22
+gi
+gobject
