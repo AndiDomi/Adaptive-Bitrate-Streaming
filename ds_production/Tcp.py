@@ -58,7 +58,9 @@ class TcpProt():
 
     def send_msg(self,message):
         message = str(message)
-        self.player_socket.send(message.encode('utf-8'))
-
+        try:
+            self.player_socket.send(message.encode('utf-8'))
+        except:
+            self.player_socket.send(message.encode('utf-8'))
 
 
