@@ -107,12 +107,12 @@ class Bandwidth (Bandwidth_base):
 
     def set_up_socket(self):
         if(self.SERVER_OR_PLAYER=="1"):
-            test_tcp_server = TcpProt('', 3345, 1024)
+            test_tcp_server = TcpProt('192.168.11.39', 3345, 1024)
             test_tcp_server.start(1)
             return test_tcp_server
 
         else:
-            test_tcp_client = TcpProt('', 3345, 1024)
+            test_tcp_client = TcpProt('192.168.11.39', 3345, 1024)
             test_tcp_client.start(0)
             return test_tcp_client
 
