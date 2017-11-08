@@ -13,11 +13,11 @@ class TcpProt():
     conn = None
 
     # constructor to initialize the class variables
-    def __init__(self, tcp_ip, port, buffersize):
+    def __init__(self, other_tcp_ip, other_port, buffersize):
 
         # address of the client
-        self.TCP_IP = tcp_ip
-        self.TCP_PORT = port
+        self.TCP_IP = other_tcp_ip
+        self.TCP_PORT = other_port
         self.BUFFER_SIZE = buffersize  # Normally 64, less for faster response
 
     # start the socket connection
@@ -27,6 +27,7 @@ class TcpProt():
         if server_or_player == 1:
             try:
                 print("Server connecting")
+                self.TCP_IP=''
                 self.address = (self.TCP_IP, self.TCP_PORT)
                 self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
