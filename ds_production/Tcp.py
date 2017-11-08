@@ -37,6 +37,7 @@ class TcpProt():
                 #global conn
                 self.conn, self.address = self.server_socket.accept()
                 print("Connected to client at ", self.address)
+
             except:
                 print ("Connection Failed, Retrying..")
                 time.sleep(1)
@@ -54,14 +55,18 @@ class TcpProt():
                 self.start(0)
 
     def get_msg(self):
-        get_msg = self.conn.recv(self.BUFFER_SIZE).decode('utf-8')
-        return get_msg
+            get_msg = self.conn.recv(self.BUFFER_SIZE).decode('utf-8')
+            if(not get_msg):
+                print("we couldnt get the message, lets think what to do")
+                self.start(1)
+            else:
+                return get_msg
+
 
     def send_msg(self,message):
         message = str(message)
         try:
             self.player_socket.send(message.encode('utf-8'))
         except:
+            self.start(0)
             self.player_socket.send(message.encode('utf-8'))
-
-
