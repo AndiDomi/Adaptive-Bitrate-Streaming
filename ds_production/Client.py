@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
 
 
-    client = Bandwidth('0','192.168.11.40','5000',1)
+    client = Bandwidth('0','192.168.11.40','5000',1024)
     client.start()
 
 

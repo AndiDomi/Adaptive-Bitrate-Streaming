@@ -33,17 +33,17 @@ class Bandwidth_base():
     def time_start(self):
         pass
 
-    def after_counting_algo(self):
+    def set_up_socket(self,test_tcp):
         pass
 
-    def set_up_socket(self,test_tcp):
+    def after_counting_algo(self):
         pass
 
     def __init__(self, server_or_player, sniff_IP, sniff_PORT, sniff_TIME):
         self.SERVER_OR_PLAYER = server_or_player
-        self.SNIFF_IP= sniff_IP
-        self.SNIFF_PORT= sniff_PORT
-        self.SNIFF_TIME= sniff_TIME
+        self.SNIFF_IP = sniff_IP
+        self.SNIFF_PORT = sniff_PORT
+        self.SNIFF_TIME = sniff_TIME
 
 
     def start(self):
@@ -63,8 +63,6 @@ class Bandwidth_base():
                 global count
                 count += 1
             packets = sniff(lfilter=pkt_callback, filter='udp and host '+self.SNIFF_IP+' and port '+self.SNIFF_PORT, store=0, timeout=1)
-
-
 
             # main brain of the function
             self.after_counting_algo(count,test_tcp)
@@ -119,33 +117,13 @@ class Bandwidth (Bandwidth_base):
 
 
 
-
-
-
-
     def after_counting_algo(self,count, test_tcp):
         if(self.SERVER_OR_PLAYER=="1"):
-            try:
-                test_tcp.get_msg()
-                if(test_tcp.get_msg==''):
-                    print("no messages")
-                else:
-                    print("The client producet ",test_tcp.get_msg())
-            except :
-                print("No packages from Client, waiting...")
-                test_tcp.get_msg()
+            print("The client producet ",test_tcp.get_msg())
 
         elif(self.SERVER_OR_PLAYER=="0"):
-            try:
                 print("Packages sent to the Server", count)
                 test_tcp.send_msg(count)
-            except :
-                print("Cannot send packages, retrying...")
-                test_tcp.send_msg(count)
-
-
-
-
 
     def on_error(self, bus, msg):
         Bandwidth_base.on_error(self)

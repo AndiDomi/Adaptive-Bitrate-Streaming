@@ -40,7 +40,7 @@ class TcpProt():
 
             except:
                 print ("Connection Failed, Retrying..")
-                time.sleep(1)
+                time.sleep(3)
                 self.start(1)
         # if its player
         else:
@@ -51,7 +51,7 @@ class TcpProt():
 
             except :
                 print ("Connection Failed, Retrying..")
-                time.sleep(1)
+                time.sleep(3)
                 self.start(0)
 
     def get_msg(self):

@@ -13,5 +13,5 @@ if __name__ == '__main__':
 
 
 
-    server = Bandwidth('1','192.168.11.40','5000',1)
+    server = Bandwidth('1','192.168.11.40','5000',1024)
     server.start()
