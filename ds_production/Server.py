@@ -1,7 +1,4 @@
-from FetchTime import SyncTime
-import time
-from BandwidthTesting import *
-from Tcp import *
+
 from Encoder_select import Encoder_stream
 if __name__ == '__main__':
     print("Starting Server")
@@ -13,7 +10,7 @@ if __name__ == '__main__':
     # server = Bandwidth('SERVER', '192.168.11.43', '5000', 1024, '192.168.11.42')
     # server.start()
 
-    server_stream = Encoder_stream('TX2','server','h264', '192.168.11.42')
+    server_stream = Encoder_stream('TX2','server','h265', '192.168.11.43')
 
     while True:
         server_stream.start()

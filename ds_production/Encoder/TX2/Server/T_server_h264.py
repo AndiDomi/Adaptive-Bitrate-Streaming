@@ -1,6 +1,10 @@
 import gi
+
+gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 from gi.repository import GLib
+GObject.threads_init()
+Gst.init(None)
 
 
 class T_server_h264:

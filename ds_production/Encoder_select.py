@@ -1,16 +1,10 @@
-import gi
-from gi.repository import GObject, Gst
-from gi.repository import GLib
 
 from Encoder.RPI.Player.R_player_h264 import R_player_h264
 from Encoder.TX2.Player.T_player_h264 import T_player_h264
-
 from Encoder.TX2.Player.T_player_h265 import T_player_h265
-
 from Encoder.TX2.Server.T_server_h264 import T_server_h264
 from Encoder.TX2.Server.T_server_h265 import T_server_h265
 
-gi.require_version('Gst', '1.0')
 
 class Encoder_stream():
 
@@ -77,8 +71,8 @@ class Encoder_stream():
                 # its a player
                 if self.PLAYER_OR_SERVER == "player":
                     print("Initializing player for TX2 on H265 protocol")
-                    tx2_player_h264 = T_player_h265()
-
+                    tx2_player_h265 = T_player_h265()
+                    self.SERVER_BITRATE_OBJ = tx2_player_h265
                 # its a server
                 elif self.PLAYER_OR_SERVER=="server":
                     print("Initializing server for TX2 on H265 protocol")

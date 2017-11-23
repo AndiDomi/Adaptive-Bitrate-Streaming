@@ -1,7 +1,10 @@
 import gi
+
+gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 from gi.repository import GLib
-
+GObject.threads_init()
+Gst.init(None)
 
 class R_player_h264:
 
@@ -65,3 +68,6 @@ class R_player_h264:
 
     def on_error(self, bus, msg):
         print('on_error():', msg.parse_error())
+
+    def start(self):
+        self.pipeline.set_state(Gst.State.PLAYING)

@@ -1,6 +1,10 @@
 import gi
+
+gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 from gi.repository import GLib
+GObject.threads_init()
+Gst.init(None)
 
 
 class T_server_h265:
@@ -32,7 +36,7 @@ class T_server_h265:
         self.conversion.set_property('flip-method', 6)
 
         # encoder
-        self.encoder = Gst.ElementFactory.make('omxh264enc', None)
+        self.encoder = Gst.ElementFactory.make('omxh265enc', None)
         # self.encoder.set_property('low-latency', 1)
         self.encoder.set_property('control-rate', 2)
         self.encoder.set_property('bitrate', 1000)
@@ -78,5 +82,4 @@ class T_server_h265:
         return gBitrate
 
     def start(self):
-        print ("start encoder")
         self.pipeline.set_state(Gst.State.PLAYING)

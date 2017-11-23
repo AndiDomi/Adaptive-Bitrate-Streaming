@@ -1,7 +1,9 @@
-from FetchTime import SyncTime
-from Tcp import *
-from BandwidthTesting import *
+
+from Encoder_select import Encoder_stream
 if __name__ == '__main__':
 
-    pass
 
+    server_stream = Encoder_stream('TX2','player','h265', '192.168.11.43')
+
+    while True:
+        server_stream.start()

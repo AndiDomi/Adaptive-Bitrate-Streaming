@@ -1,6 +1,10 @@
 import gi
+
+gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 from gi.repository import GLib
+GObject.threads_init()
+Gst.init(None)
 
 
 class T_player_h265:
@@ -21,7 +25,7 @@ class T_player_h265:
         self.udpsrc = Gst.ElementFactory.make('udpsrc')
         self.udpsrc.set_property('port', 5060)
 
-        self.app = Gst.Caps.from_string('application/x-rtp, encoding-name=H266, payload=96')
+        self.app = Gst.Caps.from_string('application/x-rtp, encoding-name=H265, payload=96')
 
         self.depay = Gst.ElementFactory.make('rtph265depay', None)
 
@@ -31,7 +35,8 @@ class T_player_h265:
 
         self.encoder = Gst.ElementFactory.make('omxh265dec', None)
 
-        self.sink = Gst.ElementFactory.make('nvoverlay', None)
+        self.sink = Gst.ElementFactory.make('nvoverlaysink', None)
+
         self.sink.set_property('sync', False)
         self.sink.set_property('async', False)
         # self.sink.set_property('-e')
@@ -50,3 +55,9 @@ class T_player_h265:
         self.parse.link(self.queue)
         self.queue.link(self.encoder)
         self.encoder.link(self.sink)
+
+    def start(self):
+        self.pipeline.set_state(Gst.State.PLAYING)
+
+    def on_error(self, bus, msg):
+        print('on_error():', msg.parse_error())

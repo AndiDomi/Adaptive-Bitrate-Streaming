@@ -1,6 +1,10 @@
 import gi
+
+gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 from gi.repository import GLib
+GObject.threads_init()
+Gst.init(None)
 
 
 class T_player_h264:
@@ -46,3 +50,9 @@ class T_player_h264:
         self.depay.link(self.queue)
         self.queue.link(self.encoder)
         self.encoder.link(self.sink)
+
+    def start(self):
+        self.pipeline.set_state(Gst.State.PLAYING)
+
+    def on_error(self, bus, msg):
+        print('on_error():', msg.parse_error())
