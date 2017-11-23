@@ -10,15 +10,14 @@ class Encoder():
     ENCODER_PROTOCOL = None
     PLAYER_OR_SERVER = None
     STREAM_IP = None
-    STREAM_PORT = None
 
-    def __init__(self, board, player_or_server, encoder_protocol, stream_ip, stream_port):
+
+    def __init__(self, board, player_or_server, encoder_protocol, stream_ip):
 
         self.BOARD = board
         self.PLAYER_OR_SERVER = player_or_server
         self.ENCODER_PROTOCOL = encoder_protocol
         self.STREAM_IP = stream_ip
-        self.STREAM_PORT = stream_port
 
         # if the board is a raspberry pi
         if board == "rpi":
@@ -43,7 +42,7 @@ class Encoder():
                     # source
 
                     self.udpsrc = Gst.ElementFactory.make('udpsrc')
-                    self.udpsrc.set_property('port', 5000)
+                    self.udpsrc.set_property('port', 5060)
 
                     self.app = Gst.Caps.from_string('application/x-rtp, encoding-name=H264, payload=96')
 
@@ -89,7 +88,7 @@ class Encoder():
 
         # if the board is a tx2
         else:
-            print ("initializing gstreamer for tx2")
+            print("initializing gstreamer for tx2")
 
             # the encoder protocol is h264
             if encoder_protocol == "h264":
@@ -98,6 +97,7 @@ class Encoder():
                 # and its a player
                 if player_or_server == "player":
                     print ("initializing player")
+
 
                 # if its a server
                 else:
@@ -137,7 +137,7 @@ class Encoder():
                     self.parse = Gst.ElementFactory.make('h264parse', None)
                     self.udp = Gst.ElementFactory.make('udpsink', None)
                     self.udp.set_property('host', self.STREAM_IP)
-                    self.udp.set_property('port', self.STREAM_PORT)
+                    self.udp.set_property('port', 5060)
                     self.udp.set_property('auto-multicast', False)
 
                     # Add elements to the pipeline
@@ -161,11 +161,11 @@ class Encoder():
 
                 # its a player
                 if player_or_server == "player":
-                    print ("initializing player")
+                    print("initializing player")
 
                 # its a server
                 else:
-                    print ("initializing server")
+                    print("initializing server")
 
 
     def start(self):

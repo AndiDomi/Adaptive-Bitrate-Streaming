@@ -31,6 +31,8 @@ class TcpProt():
                 self.address = (self.TCP_IP, self.TCP_PORT)
                 self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                self.server_socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
                 self.server_socket.bind(self.address)
                 self.server_socket.listen(5)
                 print("Listening for client . . .")
@@ -47,7 +49,10 @@ class TcpProt():
 
             try:  # Cant get it to make connection after retrying
                 self.player_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                self.player_socket_socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
                 self.player_socket.connect((self.TCP_IP, self.TCP_PORT))
+
 
             except :
                 print ("Connection Failed, Retrying..")
@@ -55,12 +60,17 @@ class TcpProt():
                 self.start(0)
 
     def get_msg(self):
+        try:
             get_msg = self.conn.recv(self.BUFFER_SIZE).decode('utf-8')
             if(not get_msg):
                 print("we couldnt get the message, lets think what to do")
                 self.start(1)
+
             else:
                 return get_msg
+        except:
+            print("dead")
+
 
 
     def send_msg(self,message):
